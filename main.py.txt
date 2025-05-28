@@ -1,0 +1,69 @@
+
+from collections import deque
+
+# Cola de pacientes en espera (nombre, motivo)
+cola_pacientes = deque([
+    ("Ana López", "Dolor de cabeza"),
+    ("Carlos Pérez", "Fiebre"),
+    ("María García", "Dolor de garganta")
+])
+
+# Historial de recetas (pila) por paciente
+historial_recetas = {
+    "Ana López": ["Ibuprofeno x 3 días"],
+    "Carlos Pérez": [],
+    "María García": ["Amoxicilina x 7 días"]
+}
+
+# Ver pacientes en espera
+def ver_pacientes_en_espera():
+    if cola_pacientes:
+        print("Pacientes en espera:")
+        for i, (nombre, motivo) in enumerate(cola_pacientes, start=1):
+            print(f"{i}. {nombre} - Motivo: {motivo}")
+    else:
+        print("No hay pacientes en espera.")
+
+# Atender al siguiente paciente
+def atender_siguiente_paciente():
+    if cola_pacientes:
+        nombre, motivo = cola_pacientes.popleft()
+        print(f"Atendiendo a {nombre} (Motivo: {motivo})")
+        receta = input(f"Ingrese la receta para {nombre}: ")
+        if nombre not in historial_recetas:
+            historial_recetas[nombre] = []
+        historial_recetas[nombre].append(receta)
+        print(f"Receta registrada correctamente.")
+    else:
+        print("No hay pacientes en espera.")
+
+# Consultar historial de recetas de un paciente
+def consultar_historial(nombre):
+    if nombre in historial_recetas and historial_recetas[nombre]:
+        print(f"Historial de recetas de {nombre}:")
+        for receta in reversed(historial_recetas[nombre]):
+            print(f"- {receta}")
+    else:
+        print(f"No hay recetas registradas para {nombre}.")
+
+# Simulación de uso
+while True:
+    print("\nOpciones:")
+    print("1. Ver pacientes en espera")
+    print("2. Atender siguiente paciente")
+    print("3. Consultar historial de un paciente")
+    print("4. Salir")
+    opcion = input("Seleccione una opción: ")
+
+    if opcion == "1":
+        ver_pacientes_en_espera()
+    elif opcion == "2":
+        atender_siguiente_paciente()
+    elif opcion == "3":
+        nombre = input("Ingrese el nombre del paciente: ")
+        consultar_historial(nombre)
+    elif opcion == "4":
+        print("Sistema finalizado.")
+        break
+    else:
+        print("Opción no válida. Intente de nuevo.")
