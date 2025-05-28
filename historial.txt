@@ -1,0 +1,18 @@
+# Diccionario que almacena la pila de recetas por paciente
+historial_recetas = {}
+
+def guardar_receta(nombre_paciente, receta):
+    if nombre_paciente not in historial_recetas:
+        historial_recetas[nombre_paciente] = []  # Inicializa la pila si no existe
+    historial_recetas[nombre_paciente].append(receta)  # Agrega receta como en una pila
+    print(f"Receta '{receta}' guardada para {nombre_paciente}.")
+
+# Ejemplo de uso:
+guardar_receta("Ana López", "Paracetamol x 5 días")
+guardar_receta("Ana López", "Ibuprofeno x 3 días")
+guardar_receta("Carlos Pérez", "Amoxicilina x 7 días")
+
+# Verificar contenido de la pila (última receta debe aparecer al final de la lista si se imprime directamente)
+print("\nHistorial de recetas:")
+for paciente, pila in historial_recetas.items():
+    print(f"{paciente}: {list(reversed(pila))}")  # Mostrar desde la más reciente a la más antigua
